@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>UGAI Staff Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Login Screen -->
+  <div id="root">
+    <aside class="login-card" id="loginCard" role="dialog" aria-labelledby="loginTitle">
+      <h1 id="loginTitle">UGAI — Staff Login</h1>
+
+      <label class="field">
+        <span>ID (3 digits)</span>
+        <input id="userID" maxlength="3" inputmode="numeric" autocomplete="off" placeholder="e.g. 123"/>
+      </label>
+
+      <label class="field">
+        <span>Password</span>
+        <input id="password" type="password" placeholder="password"/>
+      </label>
+
+      <div id="twoStepBox" class="field hidden">
+        <span>Two-step code</span>
+        <input id="twoStepInput" type="password" placeholder="two-step code"/>
+      </div>
+
+      <p id="loginError" class="error hidden"></p>
+
+      <div class="actions">
+        <button id="btnLogin">Login</button>
+      </div>
+
+      <footer class="login-foot">
+        <small>Login with your staff ID. No sign-ups here.</small>
+      </footer>
+    </aside>
+
+    <!-- Dashboard Shell (hidden until login) -->
+    <div class="dashboard hidden" id="dashboard">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-title">UGAI Staff</div>
+          <div class="brand-sub">Control Panel</div>
+        </div>
+
+        <div class="top-actions">
+          <div class="tokens" title="Staff Tokens">
+            <svg class="token-icon" viewBox="0 0 24 24"><path d="M12 2 L15 8 L22 9 L17 14 L18 21 L12 18 L6 21 L7 14 L2 9 L9 8 Z"/></svg>
+            <span id="tokenCount">0</span>
+          </div>
+
+          <div class="user-area">
+            <div id="staffLabel">—</div>
+            <button id="btnLogout" class="btn-ghost">Logout</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="main">
+        <nav class="sidebar" id="sidebar">
+          <ul>
+            <li class="nav-item active" data-tab="inbox"><span>Inbox</span>
+              <span id="badgeUnread" class="badge hidden">0</span>
+            </li>
+            <li class="nav-item" data-tab="tools"><span>Staff Tools</span></li>
+            <li class="nav-item" data-tab="system"><span>System Info</span></li>
+          </ul>
+        </nav>
+
+        <section class="content">
+          <!-- INBOX -->
+          <section id="tab-inbox" class="tab active">
+            <div class="panel-header">
+              <h2>Inbox</h2>
+              <div>
+                <button id="btnClearRead" class="small">Clear read</button>
+                <button id="btnClearAll" class="small danger">Clear all</button>
+              </div>
+            </div>
+            <div id="inboxList" class="inbox-list">
+              <!-- notifications rendered here -->
+            </div>
+            <div id="inboxEmpty" class="muted">No notifications — you're all clear.</div>
+          </section>
+
+          <!-- TOOLS -->
+          <section id="tab-tools" class="tab">
+            <h2>Staff Tools</h2>
+            <div class="panel">
+              <div class="accordion">
+                <div class="accordion-item">
+                  <button class="accordion-header">Rules</button>
+                  <div class="accordion-content hidden">
+                    <h3>UGAI Rules (Roblox Game)</h3>
+                    <p>These are the core rules for playing UGAI. Violations may result in warnings, kicks, or bans.</p>
+                    <ul>
+                      <li>No harassment, bullying, or hate speech.</li>
+                      <li>No cheating, exploiting, or using unauthorized scripts.</li>
+                      <li>No spamming or flooding chat.</li>
+                      <li>Respect other players and staff.</li>
+                      <li>No advertising other games or servers without permission.</li>
+                      <li>Follow all Roblox Community Standards.</li>
+                    </ul>
+                    <h3>How to Appropriately Address Rule Breakers</h3>
+                    <p>As staff, follow this protocol:</p>
+                    <ol>
+                      <li>Observe and document the violation (screenshots/logs).</li>
+                      <li>Issue a verbal warning in chat or private message.</li>
+                      <li>If repeated, apply a temporary mute or kick.</li>
+                      <li>For severe or repeated offenses, ban the player and report to admins.</li>
+                      <li>Always remain professional and unbiased.</li>
+                    </ol>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <button class="accordion-header">Calculator</button>
+                  <div class="accordion-content hidden">
+                    <p>Simple calculator tool for quick math.</p>
+                    <div class="calculator">
+                      <input id="calcNum1" type="number" placeholder="Number 1" />
+                      <select id="calcOp">
+                        <option value="+">+</option>
+                        <option value="-">-</option>
+                        <option value="*">*</option>
+                        <option value="/">/</option>
+                      </select>
+                      <input id="calcNum2" type="number" placeholder="Number 2" />
+                      <button id="btnCalc">Calculate</button>
+                      <p id="calcResult" class="muted">Result: </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <button class="accordion-header">Ask The UGAI for information!</button>
+                  <div class="accordion-content hidden">
+                    <p>Need more info? Ask the UGAI AI!</p>
+                    <a href="https://grok.x.ai/" target="_blank">Click here to ask the AI</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SYSTEM -->
+          <section id="tab-system" class="tab">
+            <h2>System Info</h2>
+            <div class="panel">
+              <p>Version: <strong>1.0.2</strong></p>
+              <p>Status: <strong>Stable</strong> ✅</p>
+              <hr/>
+              <p class="muted">
+                StaffTokens are shown in the header. How to gain tokens: <strong>complete tasks you receive in notifications inside the Inbox.</strong>
+                When a notification contains a task, follow its instructions and press the task's action button to mark it complete — tasks that reward tokens will be handled via the Tools area or future server sync.
+              </p>
+              <div class="accordion">
+                <div class="accordion-item">
+                  <button class="accordion-header">Instructions</button>
+                  <div class="accordion-content hidden">
+                    <h3>What is the Dashboard Used For?</h3>
+                    <p>The UGAI Staff Dashboard is a control panel for staff members to manage notifications, access tools, and view system information. It helps in monitoring tasks, enforcing rules in the Roblox game, and maintaining staff accounts.</p>
+                    <h3>What is Allowed?</h3>
+                    <ul>
+                      <li>Logging in with assigned credentials.</li>
+                      <li>Reviewing and acting on notifications.</li>
+                      <li>Using staff tools for game moderation and calculations.</li>
+                      <li>Viewing system info and instructions.</li>
+                      <li>Logging out when finished.</li>
+                    </ul>
+                    <h3>What is Not Allowed?</h3>
+                    <ul>
+                      <li>Sharing login credentials with others.</li>
+                      <li>Attempting to modify the dashboard code or data.</li>
+                      <li>Using the dashboard for non-UGAI related activities.</li>
+                      <li>Ignoring notifications or tasks.</li>
+                      <li>Abusing moderation tools in the game.</li>
+                    </ul>
+                    <h3>Risks for Account Deletion</h3>
+                    <p>Your staff account may be at risk of deletion if:</p>
+                    <ul>
+                      <li>You violate UGAI rules or Roblox standards.</li>
+                      <li>You share sensitive information or credentials.</li>
+                      <li>You fail to complete assigned tasks repeatedly.</li>
+                      <li>There is evidence of unauthorized access or hacking attempts.</li>
+                      <li>You engage in misconduct as a staff member.</li>
+                    </ul>
+                    <p>Always act responsibly to protect your account and maintain your administrative privileges. Failure to do so may result in actions being taken against your privileges, including those on Discord and Roblox.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <!-- Notification Modal -->
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-card">
+        <header>
+          <h3 id="modalTitle">Title</h3>
+          <button id="modalClose" class="btn-ghost small">✕</button>
+        </header>
+
+        <div id="modalBody" class="modal-body"></div>
+
+        <footer class="modal-footer">
+          <div class="modal-actions" id="modalButtons"></div>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
