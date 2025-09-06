@@ -62,7 +62,7 @@ const users = [
         text: "Check the game for bugs or rule...",
         UserNotifyDesc:
           "Check the game for bugs or rule breakers and record yourself doing it! Earn 1 StaffPoint for submitting a 2-minute video of you searching for bugs or rule breakers. Earn an additional StaffPoint if you actually find any issues. Earn another StaffPoint if you add subtitles to your video (instead of using in-game chat) to explain what you’re doing, or if you use voice narration. Documenting your work clearly helps us improve the game and rewards your effort—so make it count!",
-        read: true,
+        read: false,
         type: "info",
         buttons: [
           { label: "Acknowledge", action: "markRead" },
